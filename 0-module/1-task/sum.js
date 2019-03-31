@@ -1,7 +1,5 @@
-const isNumber = require('is-number');
-
 function sum(a, b) {
-  if (!isNumber(a) || !isNumber(b)) {
+  if (typeof a !== 'number' || typeof b !== 'number') {
     throw new TypeError();
   }
   return a + b;
