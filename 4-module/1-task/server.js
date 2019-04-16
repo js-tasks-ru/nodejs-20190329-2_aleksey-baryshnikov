@@ -43,6 +43,7 @@ server.on('request', (req, res) => {
 
     default:
       res.statusCode = 501;
+
       res.end('501 Not implemented');
   }
 });
