@@ -60,17 +60,14 @@ router.patch('/users/:id', async (ctx) => {
   var id = ctx.params.id;
   if (!idIsValid(ctx.params.id)) { ctx.status = 400; return; }
 
-  // todo: make some validation
   var updateUserRequest = ctx.request.body;
 
-  var oldUser = await User.findByIdAndUpdate(id, {
-    email: updateUserRequest.email,
-    displayName: updateUserRequest.displayName
-  });
+  var user = await User.findById(id);
+  if (updateUserRequest.email) { user.email = updateUserRequest.email; }
+  if (updateUserRequest.displayName) { user.displayName = updateUserRequest.displayName; }
+  await user.save();
 
-  var newUser = await User.findById(id);
-
-  ctx.body = newUser;
+  ctx.body = user;
 });
 
 router.post('/users', async (ctx) => {
