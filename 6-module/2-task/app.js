@@ -67,6 +67,8 @@ router.patch('/users/:id', async (ctx) => {
   if (updateUserRequest.displayName) { user.displayName = updateUserRequest.displayName; }
   await user.save();
 
+  // we could also use this one -> await User.findByIdAndUpdate(id, updatedUser, { runValidators: true, new: true })
+
   ctx.body = user;
 });
 
@@ -81,6 +83,10 @@ router.post('/users', async (ctx) => {
   await user.save();
   ctx.body = user;
 });
+
+// we can pass validateId middleware into the method
+// router.delete('/users/:id', validateId, async (ctx) => { ....
+// validateId would have the following interface: function validateId(ctx, next) { if (!validId(ctx.params.id) {ctx.throw(400)} else return next(); )}
 
 router.delete('/users/:id', async (ctx) => {
   var id = ctx.params.id;
